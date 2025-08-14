@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Boiled Egg",
+    "calories": 77,
+    "grams": 50,
+    "caloriePercent": 77,
+    "proteinPercent": 35,
+    "carbsPercent": 1,
+    "fatPercent": 62,
+    "calciumPercent": 2
+  },
+  {
+    "name": "Cooked Rice",
+    "calories": 130,
+    "grams": 100,
+    "caloriePercent": 130,
+    "proteinPercent": 8,
+    "carbsPercent": 90,
+    "fatPercent": 2,
+    "calciumPercent": 1
+  },
+  {
+    "name": "Roti (Wheat)",
+    "calories": 110,
+    "grams": 40,
+    "caloriePercent": 275,
+    "proteinPercent": 12,
+    "carbsPercent": 80,
+    "fatPercent": 8,
+    "calciumPercent": 3
+  },
+  {
+    "name": "Chapati",
+    "calories": 104,
+    "grams": 35,
+    "caloriePercent": 297,
+    "proteinPercent": 10,
+    "carbsPercent": 82,
+    "fatPercent": 8,
+    "calciumPercent": 2
+  },
+  {
+    "name": "White Roti",
+    "calories": 98,
+    "grams": 40,
+    "caloriePercent": 245,
+    "proteinPercent": 9,
+    "carbsPercent": 85,
+    "fatPercent": 6,
+    "calciumPercent": 2
+  },
+  {
+    "name": "Paneer (Low Fat)",
+    "calories": 145,
+    "grams": 100,
+    "caloriePercent": 145,
+    "proteinPercent": 32,
+    "carbsPercent": 8,
+    "fatPercent": 60,
+    "calciumPercent": 21
+  },
+  {
+    "name": "Sweet Potato (Boiled)",
+    "calories": 86,
+    "grams": 100,
+    "caloriePercent": 86,
+    "proteinPercent": 6,
+    "carbsPercent": 92,
+    "fatPercent": 2,
+    "calciumPercent": 3
+  },
+  {
+    "name": "Banana",
+    "calories": 89,
+    "grams": 100,
+    "caloriePercent": 89,
+    "proteinPercent": 5,
+    "carbsPercent": 93,
+    "fatPercent": 2,
+    "calciumPercent": 1
+  }
+]
