@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter,useSearchParams } from 'next/navigation';
 import { LiaEyeSolid, LiaEyeSlashSolid } from "react-icons/lia";
 import GoogleLoginButton from '@/components/GoogleLoginButton';
 import { GoogleLogin } from '@react-oauth/google';
@@ -16,6 +16,8 @@ const SignUpPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
+  const searchParams=useSearchParams();
+  const redirect=searchParams.get("redirect");
 
   const handleSignUp = async () => {
     setError('');
@@ -57,7 +59,7 @@ const SignUpPage = () => {
       localStorage.setItem("token", data.token);  //store token in localstorage
       setSuccess('🎉 Welcome to WellBeing Hub.');
       setTimeout(() => {
-        router.push('/');
+        router.push(redirect || '/');
       }, 1500);
     } catch (err: any) {
       setError(err.message || 'Oops. That was not supposed to happen.');

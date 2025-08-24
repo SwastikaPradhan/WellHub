@@ -21,7 +21,7 @@ export default function ChatWithAI() {
     setLoading(true);
 
     try {
-      const res = await fetch('https://wellnessbackend-v1qw.onrender.com/api/ai/chat', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userMessage }),
@@ -72,7 +72,7 @@ export default function ChatWithAI() {
     formData.append('file', selectedFile);
 
     try {
-      const res = await fetch('https://wellnessbackend-v1qw.onrender.com/api/ai/upload', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/upload`, {
         method: 'POST',
         
         body: formData,

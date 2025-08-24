@@ -19,7 +19,7 @@ export default function HabitCard() {
 
   const fetchJournals = async () => {
     try {
-      const res = await fetch("https://wellnessbackend-v1qw.onrender.com/api/dashboard/journaldata", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/journaldata`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // adjust based on your auth
         },

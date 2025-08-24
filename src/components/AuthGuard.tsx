@@ -22,7 +22,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     checkUser();
   }, [pathname, router]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   return <>{children}</>;
 }

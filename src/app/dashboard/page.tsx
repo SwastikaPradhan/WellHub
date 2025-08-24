@@ -37,7 +37,7 @@ export default function Dashboard() {
         const end = range[0].endDate?.toISOString().split("T")[0];
 
         const response = await axios.get(
-          `https://wellnessbackend-v1qw.onrender.com/api/dashboard/nutritiondata`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/nutritiondata`,
           {
             withCredentials: true,
             headers: {
@@ -56,7 +56,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const res = await axios.get("https://wellnessbackend-v1qw.onrender.com/api/dashboard/username", {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/username`, {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`

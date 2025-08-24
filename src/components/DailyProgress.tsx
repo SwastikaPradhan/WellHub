@@ -14,7 +14,7 @@ export default function DailyProgress({ percentage = 85 }: DailyProgressProps) {
       try {
         const token = localStorage.getItem("token");
         const res = await fetch(
-          "https://wellnessbackend-v1qw.onrender.com/api/dashboard/dailyprogress",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/dailyprogress`,
           {
             method: "GET",
             headers: {
@@ -46,7 +46,7 @@ export default function DailyProgress({ percentage = 85 }: DailyProgressProps) {
   return (
     <div
       className="bg-[#f9f9fb] rounded-xl p-6 shadow text-center"
-      style={{ width: "280px", height: "380px" }}
+      style={{ width: "380px", height: "480px" }}
     >
       <h2
         className="text-[20px] font-medium text-[#1e1e1e] mb-6 font-sans "

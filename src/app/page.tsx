@@ -12,8 +12,6 @@ export default function HomePage() {
 
   const handleConnect = async () => {
     const token = localStorage.getItem("token");
-
-
     try {
       // request to Google Fit API 
       const res = await fetch(
@@ -25,9 +23,7 @@ export default function HomePage() {
           },
         }
       );
-
       if (!res.ok) throw new Error(`Google Fit request failed: ${res.status}`);
-
       const data = await res.json();
       alert("Successfully connected to Google Fit! Check console for details.");
     } catch (err) {
@@ -87,7 +83,8 @@ export default function HomePage() {
             height={900}
             priority
           />
-          <div className="absolute top-[40%] right-[370px] -translate-y-1/2 rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl rounded-br-none w-[100px] h-[100px] overflow-hidden">
+          <div className="absolute top-[40%] right-[370px] -translate-y-1/2 rounded-tl-3xl 
+          rounded-tr-3xl rounded-bl-3xl rounded-br-none w-[100px] h-[100px] overflow-hidden">
             <Image
               src="/chatbotimage.jpg"
               alt="Robot Assistant"
@@ -113,7 +110,8 @@ export default function HomePage() {
                 Log Activity
               </h3>
               <Link href="/log-activity">
-                <div className="absolute bottom-4 left-4 w-16 h-16 bg-white text-black rounded-full flex items-center justify-center text-4xl z-10">
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-white text-black 
+                rounded-full flex items-center justify-center text-4xl z-10">
                   ↗
                 </div>
               </Link>
@@ -134,7 +132,8 @@ export default function HomePage() {
                 Nutrition Tracker
               </h3>
               <Link href="/nutrition-log">
-                <div className="absolute bottom-4 left-4 w-16 h-16 bg-white text-black rounded-full flex items-center justify-center text-4xl z-10">
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-white text-black 
+                rounded-full flex items-center justify-center text-4xl z-10">
                   ↗
                 </div>
               </Link>
@@ -155,7 +154,8 @@ export default function HomePage() {
                 Daily Journal
               </h3>
               <Link href="/journal">
-                <div className="absolute bottom-4 left-4 w-16 h-16 bg-white text-black rounded-full flex items-center justify-center text-4xl z-10">
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-white text-black
+                 rounded-full flex items-center justify-center text-4xl z-10">
                   ↗
                 </div>
               </Link>
@@ -218,7 +218,8 @@ export default function HomePage() {
           </section>
         </section>
       </div>
-      <footer className="fixed-bottom left-0 right-0 w-full bg-gradient-to-r from-pink-200 via-yellow-200 to-orange-200 text-gray-800 py-8 mt-16 shadow-lg">
+      <footer className="fixed-bottom left-0 right-0 w-full bg-gradient-to-r
+       from-pink-200 via-yellow-200 to-orange-200 text-gray-800 py-8 mt-16 shadow-lg">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-8">
 
           {/* Left Side */}

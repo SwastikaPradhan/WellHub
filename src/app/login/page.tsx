@@ -69,13 +69,15 @@ const LoginPage = () => {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-black text-white p-3 uppercase text-lg font-bold hover:bg-white hover:text-black hover:border-black border-2 transition duration-200"
+          className="w-full bg-black text-white p-3 uppercase text-lg font-bold hover:bg-white
+           hover:text-black hover:border-black border-2 transition duration-200"
         >
            Login 
         </button>
         <button 
           onClick ={handleLoginwithGoogle}
-          className="w-full bg-black text-white p-3 uppercase text-lg font-bold hover:bg-white hover:text-black hover:border-black border-2 transition duration-200"
+          className="w-full bg-black text-white p-3 uppercase text-lg font-bold hover:bg-white
+           hover:text-black hover:border-black border-2 transition duration-200"
           >
             Login with Google
           </button>

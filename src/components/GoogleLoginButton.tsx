@@ -18,7 +18,7 @@ export default function GoogleLoginButton() {
     try {
       const decoded: GoogleTokenPayload = jwtDecode(credentialResponse.credential);
 
-      const { data } = await axios.post('https://wellnessbackend-v1qw.onrender.com/api/auth/social-login', {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/social-login`, {
         email: decoded.email,
         name: decoded.name,
         image: decoded.picture,
