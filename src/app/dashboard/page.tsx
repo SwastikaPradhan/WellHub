@@ -1,16 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import AuthGuard from "@/components/AuthGuard";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-
-import { IoLogOutOutline } from "react-icons/io5";
 //@ts-ignore
 import { DateRange } from 'react-date-range';
 
 import CaloriesChart from "@/components/CaloriesChart";
-import ActivityCard from "@/components/ActivityCard";
 import HabitCard from "@/components/HabitCard";
 import DailyProgress from "@/components/DailyProgress";
 import MeditationCard from "@/components/MeditationCard";
@@ -160,9 +156,7 @@ export default function Dashboard() {
               <div className="h-[270px] " style={{ marginTop: "-15px" }}>
                 <CaloriesChart /> </div>
             </div>
-            <div className="w-full lg:w-[450px] " style={{ marginTop: "-15px" }}>
-              <ActivityCard />
-            </div>
+           
           </div>
           {/* Habit + Progress + Meditation */}
           <div className="flex flex-col lg:flex-row  w-full mt-4"

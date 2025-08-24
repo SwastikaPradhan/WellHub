@@ -77,13 +77,14 @@ export default function HabitCard() {
         )}
       </div>
 
+      <div className="max-h-[400px] overflow-y-auto space-y-3 pr-2">
       {/* Journal List */}
       {journals.map((journal, index) => (
         <div
           key={index}
           className="flex items-start gap-3 px-2 py-3 mb-3 rounded-xl bg-white shadow-sm"
         >
-          {/* Left Image */}
+          
           <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
             <Image
               src={journal.image_url || "/yogaimage.avif"}
@@ -122,6 +123,8 @@ export default function HabitCard() {
           />
         </div>
       ))}
+      </div>
+
     </div>
   );
 }

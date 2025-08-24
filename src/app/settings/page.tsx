@@ -1,41 +1,120 @@
 'use client';
 
 import Sidebar from '@/components/Sidebar';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect} from 'react';
+import { ToastContainer,toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { Camera, User, Mail, Briefcase, FileText, Save, Upload } from 'lucide-react';
+import ImageUpload from "@/components/ImageUpload";
 
 export default function ProfileSettings() {
   const [formData, setFormData] = useState({
-    name: 'Swastika Pradhan',
+    name: '',
     email: '',
     role: '',
     description: '',
+    image:''
   });
 
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [userId,setUserId]=useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  //
+  useEffect(()=>{
+    const fetchProfile=async()=>{
+      try{
+        const token=localStorage.getItem("token");
+        if(!token){
+          return;
+        }
+
+        const res=await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/settings/getprofile`,
+
+            {
+              headers:{Authorization:`Bearer ${token}`},
+            }
+        );
+        const result=await res.json();
+        
+        if (res.ok && result.user) {
+          setFormData({
+            name: result.user.name || '',
+            email: result.user.email || '',
+            role: result.user.role || '',
+            description: result.user.description || '',
+            image: result.user.image || ''
+          });
+          setPreview(result.user.image || null);
+      }
+    }catch(err){
+      console.error("Error fetching profile:",err);
+      toast.error("Failed to load profile");
+    }
+  };
+  fetchProfile();
+},[]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setIsUploading(true);
-      const objectUrl = URL.createObjectURL(file);
-      setPreview(objectUrl);
-      setTimeout(() => setIsUploading(false), 1000);
+  // Handle image selection from ImageUpload component
+  const handleImageSelect = (file: File, appwriteUrl: string) => {
+    setIsUploading(true);
+    // Update preview with the local file URL for immediate display
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
+    
+    // Update formData with the Appwrite URL for saving
+    setFormData((prev) => ({ ...prev, image: appwriteUrl }));
+    
+    // Simulate upload completion
+    setTimeout(() => setIsUploading(false), 1000);
+  };
+
+  // Handle button click to trigger ImageUpload
+  const handleChangePhoto = () => {
+    // Trigger the hidden ImageUpload component
+    const imageUploadInput = document.querySelector('#hidden-image-upload input[type="file"]') as HTMLInputElement;
+    if (imageUploadInput) {
+      imageUploadInput.click();
     }
   };
 
-  const handleSave = () => {
+//save profiles
+  const handleSave = async () => {
     setIsSaving(true);
-    console.log('Saved data:', formData);
-    setTimeout(() => setIsSaving(false), 1500);
+
+    try{
+      const res=await fetch(
+         `${process.env.NEXT_PUBLIC_API_URL}/api/settings/updateprofile`,
+         {
+          method:"PUT",
+          headers:{
+            "Content-Type":"application/json",
+            Authorization:`Bearer ${localStorage.getItem("token")}`,
+          },
+          body:JSON.stringify(formData)
+         }
+      );
+      const result= await res.json();
+      if(res.ok){
+        toast.success("Profile updated!");
+      }else{
+        toast.error(result.message  || "Update failed");
+      }
+    }catch(err){
+      console.error("Save error:",err);
+      toast.error("Something went wrong while Saving");
+
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -81,20 +160,19 @@ export default function ProfileSettings() {
                   </div>
                   <div>
                     <button
-                      onClick={() => fileInputRef.current?.click()}
-                      className="inline-flex items-center px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                      onClick={handleChangePhoto}
+                      className="inline-flex items-center px-4 py-2 border border-slate-300 rounded-lg text-sm
+                       font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                     >
                       <Upload className="w-4 h-4 mr-2" />
                       Change Photo
                     </button>
                     <p className="text-xs text-slate-500 mt-2">JPG, PNG or GIF. Max size 5MB.</p>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
+                    
+                    {/* Hidden ImageUpload component */}
+                    <div id="hidden-image-upload" className="hidden">
+                      <ImageUpload onImageSelect={handleImageSelect} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -119,7 +197,8 @@ export default function ProfileSettings() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500
+                       focus:border-blue-500 transition-colors"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -135,7 +214,8 @@ export default function ProfileSettings() {
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500
+                       focus:border-blue-500 transition-colors"
                       placeholder="Enter your email address"
                     />
                   </div>
@@ -150,7 +230,8 @@ export default function ProfileSettings() {
                       name="role"
                       value={formData.role}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500
+                       focus:border-blue-500 transition-colors"
                       placeholder="Enter your job title or role"
                     />
                   </div>
@@ -167,7 +248,8 @@ export default function ProfileSettings() {
                       onChange={handleChange}
                       placeholder="Tell us about yourself, your experience, and what makes you unique..."
                       rows={4}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2
+                       focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                     />
                     <p className="text-xs text-slate-500 mt-2">Maximum 500 characters</p>
                   </div>
@@ -177,18 +259,22 @@ export default function ProfileSettings() {
                 <div className="flex items-center justify-end space-x-3 mt-8 pt-6 border-t border-slate-200">
                   <button
                     type="button"
-                    className="px-6 py-2.5 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                    className="px-6 py-2.5 border border-slate-300 rounded-lg text-sm font-medium text-slate-700
+                     bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="inline-flex items-center px-6 py-2.5 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="inline-flex items-center px-6 py-2.5 bg-blue-600 border border-transparent rounded-lg 
+                    text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 
+                    focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     {isSaving ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent
+                         rounded-full animate-spin mr-2"></div>
                         Saving...
                       </>
                     ) : (
@@ -204,6 +290,7 @@ export default function ProfileSettings() {
           </div>
         </div>
       </main>
+      <ToastContainer/>
     </div>
   );
 }

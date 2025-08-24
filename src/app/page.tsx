@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Check } from "lucide-react";
 
 export default function HomePage() {
   const { data: session } = useSession();
@@ -11,7 +12,7 @@ export default function HomePage() {
 
   const handleConnect = async () => {
     const token = localStorage.getItem("token");
-   
+
 
     try {
       // request to Google Fit API 
@@ -186,26 +187,59 @@ export default function HomePage() {
             {/* Right side text container */}
             <div className="md:w-1/2 flex flex-col justify-center text-left py-10 md:py-16 px-2 md:px-10">
               <h2 className="text-3xl md:text-5xl font-semibold mb-6">
-                Sync Your Health Data with Google Fit
+                Your All-in-One Wellness Companion
               </h2>
-              <p className="text-base md:text-lg text-black mb-8 max-w-md">
-                Connect your Google Fit account to seamlessly track your steps, workouts,
-                and wellness progress—all in one place.
-              </p>
-              <button
-                onClick={handleConnect}
-                className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-full max-w-max transition"
-              >
-                Connect with Google Fit
+
+              <ul className="text-base md:text-lg text-black mb-8 space-y-3">
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-600 mr-2" />
+                  Track nutrition & workouts
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-600 mr-2" />
+                  Build mindful habits
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-600 mr-2" />
+                  Monitor Daily Activity
+                </li>
+                <li className="flex items-center">
+                  <Check className="w-5 h-5 text-green-600 mr-2" />
+                  Stay motivated with daily tips
+                </li>
+              </ul>
+
+              <button onClick={() => router.push("/signup")}
+                className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-full max-w-max transition">
+                Start Your Journey
               </button>
             </div>
+
           </section>
         </section>
-
-        <footer className="bg-[#fdefcf] text-center text-gray-700 py-6 px-16 mt-16">
-          <p className="text-sm">&copy; {new Date().getFullYear()} WellnessHub. All rights reserved.</p>
-        </footer>
       </div>
+      <footer className="fixed-bottom left-0 right-0 w-full bg-gradient-to-r from-pink-200 via-yellow-200 to-orange-200 text-gray-800 py-8 mt-16 shadow-lg">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-8">
+
+          {/* Left Side */}
+          <div className="mb-4 md:mb-0 text-center md:text-left">
+            <h2 className="text-xl font-bold text-gray-900">WellnessHub</h2>
+            <p className="text-sm">&copy; {new Date().getFullYear()} All rights reserved.</p>
+          </div>
+
+          {/* Right Side */}
+          <div className="text-sm max-w-lg text-center md:text-right">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">About Me</h3>
+            <p>
+              Hey, I'm <span className="font-medium text-gray-900">Swastika</span>!
+              I am passionate about building tools that help people improve their lives
+              through better habits and consistent practice.
+            </p>
+            <p className="mt-2 text-gray-600"> Created by swastikapradhan🎯 </p>
+          </div>
+
+        </div>
+      </footer>
     </main>
   );
 }
